@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Safe Stroll</string>
+    <string name="edit_safe_stroll_contacts">Edit Safe Stroll Contacts</string>
+    <string name="main_menu">Main Menu</string>
+</resources>
