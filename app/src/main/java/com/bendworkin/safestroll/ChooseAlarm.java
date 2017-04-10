@@ -18,7 +18,8 @@ public class ChooseAlarm extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
-    private ArrayList<Alarm> listViewAlarms = new ArrayList<>();
+    static ArrayList<Alarm> listViewAlarms = new ArrayList<>();
+    static AlarmAdapter alarmAdapter;
 
 
     @Override
@@ -31,7 +32,7 @@ public class ChooseAlarm extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences("com.bendworkin.safestroll", Context.MODE_PRIVATE);
 
         ArrayList<String> listViewAlarmNames = new ArrayList<>();
-        ArrayList<Integer> listViewAlarmTimes = new ArrayList<>();
+        ArrayList<String> listViewAlarmTimes = new ArrayList<>();
 
         listViewAlarmNames.clear();
         listViewAlarmTimes.clear();
@@ -41,9 +42,9 @@ public class ChooseAlarm extends AppCompatActivity {
         try {
 
             //Have to use object serializer to unflatten the data from shared preferences
-            listViewAlarmNames = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("alarmTitles", ObjectSerializer.serialize(new ArrayList<String>())));
+            listViewAlarmNames = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("alarmNames", ObjectSerializer.serialize(new ArrayList<String>())));
 
-            listViewAlarmTimes = (ArrayList<Integer>) ObjectSerializer.deserialize(String.valueOf(sharedPreferences.getInt("alarmTimes", Integer.parseInt(ObjectSerializer.serialize(new ArrayList<String>())))));
+            listViewAlarmTimes = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("alarmTimes", ObjectSerializer.serialize(new ArrayList<String>())));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -66,11 +67,11 @@ public class ChooseAlarm extends AppCompatActivity {
             }
         } else {
 
-            listViewAlarms.add(new Alarm("Alarm Name", 0));
+            listViewAlarms.add(new Alarm("Alarm Name", "Alarm Time"));
 
         }
 
-        AlarmAdapter alarmAdapter = new AlarmAdapter(this, listViewAlarms);
+        alarmAdapter = new AlarmAdapter(this, listViewAlarms);
 
         alarmsListView.setAdapter(alarmAdapter);
         

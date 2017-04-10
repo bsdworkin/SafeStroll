@@ -31,68 +31,73 @@ public class EditAlarms extends AppCompatActivity {
     private String alarmName;
     private int mins;
     private int secs;
+    private ArrayList<SSContact> alarmContacts;
+    private ArrayList<AlarmSettings> alarms;
+
 
 
     static ArrayList<SSContact> myContacts = new ArrayList<>();
-    static ArrayList<AlarmSettings> myAlarms = new ArrayList<>();
-    static ArrayList<Integer> alarmTimes = new ArrayList<>();
-    static ArrayList<Boolean> alarmPasswordPrefs = new ArrayList<>();
-    static ArrayList<String> alarmNames = new ArrayList<>();
     static SSContactAdapter adapter;
+    static AlarmAdapter alarmAdapter;
 
     SharedPreferences sharedPreferences;
-    private ArrayList<SSContact> alarmContacts;
-
-
 
 
     public void backToMM(View view){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
-        //Grabs the shared prefs of the app
-        sharedPreferences = this.getSharedPreferences("com.bendworkin.safestroll",Context.MODE_PRIVATE);
+        alarmNameEditText = (EditText)findViewById(R.id.alarmNameEditText);
+        String nullCheck = "";
+        nullCheck = alarmNameEditText.getText().toString();
 
-        try{
+        if(nullCheck.matches("")){
 
-            ArrayList<String> alarmContactNames = new ArrayList<>();
-            ArrayList<String> alarmPhoneNumbers = new ArrayList<>();
+            //Notifies user to input data
+            Toast.makeText(this, "Please Enter An Alarm Name", Toast.LENGTH_LONG).show();
+            return;
+        }else {
+
+            alarmName = alarmNameEditText.getText().toString();
 
 
-            for(SSContact alarmContact : alarmContacts){
+            Alarm newAlarm = new Alarm(alarmName, Integer.toString(timerPref));
+            ChooseAlarm.listViewAlarms.add(newAlarm);
+            ChooseAlarm.alarmAdapter.notifyDataSetChanged();
 
-                alarmContactNames.add(alarmContact.name);
-                alarmPhoneNumbers.add(alarmContact.phoneNumber);
+            sharedPreferences = this.getSharedPreferences("com.bendworkin.safestroll", Context.MODE_PRIVATE);
+
+            try {
+
+                ArrayList<String> alarmNamesView = new ArrayList<>();
+                ArrayList<String> alarmTimesView = new ArrayList<>();
+
+                //Advanced for loop to restore and add the new contact to the lists
+                for(Alarm thisAlarm: ChooseAlarm.listViewAlarms){
+
+                    alarmNamesView.add(thisAlarm.thisName);
+                    alarmTimesView.add(thisAlarm.thisTime);
+
+                }
+
+                sharedPreferences.edit().putString("alarmNames", ObjectSerializer.serialize(alarmNamesView)).apply();
+                sharedPreferences.edit().putString("alarmTimes", ObjectSerializer.serialize(alarmTimesView)).apply();
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
 
             }
 
-            sharedPreferences.edit().putString("alarmNames", ObjectSerializer.serialize(alarmContactNames)).apply();
-            sharedPreferences.edit().putString("alarmPhoneNumbers", ObjectSerializer.serialize(alarmPhoneNumbers)).apply();
 
-            timerPref = mins * 60 + secs;
-            alarmTimes.add(timerPref);
-            sharedPreferences.edit().putInt("alarmTimes", Integer.parseInt(ObjectSerializer.serialize(alarmTimes))).apply();
-
-
-
-            alarmNameEditText = (EditText)findViewById(R.id.alarmNameEditText);
-            alarmName = alarmNameEditText.getText().toString();
-            alarmNames.add(alarmName);
-            sharedPreferences.edit().putString("alarmTitles", ObjectSerializer.serialize(alarmNames)).apply();
-
-            alarmPasswordPrefs.add(passwordPref);
-            sharedPreferences.edit().putBoolean("alarmPasswordPrefs", Boolean.parseBoolean(ObjectSerializer.serialize(alarmPasswordPrefs))).apply();
-
-            AlarmSettings alarm = new AlarmSettings(alarmContacts, passwordPref, alarmName, timerPref);
-            myAlarms.add(alarm);
-
-
-        }catch (Exception e){
-
-            e.printStackTrace();
+            AlarmSettings alarm = new AlarmSettings(alarmContacts, passwordPref, alarmName ,timerPref);
+            alarms = new ArrayList<>();
+            alarms.add(alarm);
 
         }
 
-        Toast.makeText(this, "Alarm Added!", Toast.LENGTH_LONG).show();
+
+
+
         startActivity(intent);
     }
 
@@ -120,7 +125,7 @@ public class EditAlarms extends AppCompatActivity {
                 mins = (int) progress / 60;
                 secs = progress - mins * 60;
 
-
+                //For some reason not working1!!!!!!!!!!
                 String secondString = Integer.toString(secs);
 
                 if(secondString == "0"){
@@ -129,6 +134,7 @@ public class EditAlarms extends AppCompatActivity {
                 }
 
                 timerTextView.setText(Integer.toString(mins) + ":" + secondString);
+                timerPref= progress;
 
             }
 
@@ -144,16 +150,17 @@ public class EditAlarms extends AppCompatActivity {
         });
 
         final TextView passwordTextView = (TextView)findViewById(R.id.passwordTextView);
-        Switch passwordSwitch = (Switch)findViewById(R.id.passwordSwitch);
+        final Switch passwordSwitch = (Switch)findViewById(R.id.passwordSwitch);
 
         passwordSwitch.setChecked(true);
+        passwordPref = true;
 
         //tells the user what the switch will do for the password preference
         passwordSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if(isChecked){
+                if(passwordSwitch.isChecked()){
                     passwordTextView.setText("Password is asked after each alarm fire");
                     passwordPref = true;
                 }else{
@@ -166,9 +173,11 @@ public class EditAlarms extends AppCompatActivity {
 
         if(passwordSwitch.isChecked()){
             passwordTextView.setText("Password is asked after each alarm fire");
+            passwordPref = true;
         }
         else {
             passwordTextView.setText("Password is asked ONLY when the alarm ends");
+            passwordPref = false;
         }
 
         ListView contactListView  = (ListView)findViewById(R.id.contactListView);

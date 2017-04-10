@@ -21,6 +21,7 @@ public class EditContacts extends AppCompatActivity {
 
     static SSContactAdapter adapter;
     static ArrayList<SSContact> myContacts = new ArrayList<>();
+
     SharedPreferences sharedPreferences;
 
 
