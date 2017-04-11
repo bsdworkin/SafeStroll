@@ -20,7 +20,8 @@
         <activity android:name=".EditContacts" />
         <activity android:name=".AddContact" />
         <activity android:name=".EditAlarms" />
-        <activity android:name=".ChooseAlarm"></activity>
+        <activity android:name=".ChooseAlarm" />
+        <activity android:name=".AlarmActivity"></activity>
     </application>
 
 </manifest>
