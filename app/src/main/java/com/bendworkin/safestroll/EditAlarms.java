@@ -122,8 +122,19 @@ public class EditAlarms extends AppCompatActivity {
 
                 mins = progress;
 
-                timerTextView.setText(Integer.toString(mins) + ":" + Integer.toString(secSeekBar.getProgress()));
+                if(secSeekBar.getProgress() == 0){
 
+                    timerTextView.setText(Integer.toString(mins) + ":00");
+
+                }else if (secSeekBar.getProgress() < 10 && secSeekBar.getProgress()!= 0) {
+
+                    timerTextView.setText(Integer.toString(mins) + ":0" + Integer.toString(secSeekBar.getProgress()));
+
+                }else{
+
+                    timerTextView.setText(Integer.toString(mins) + ":" + Integer.toString(secSeekBar.getProgress()));
+
+                }
             }
 
             @Override
@@ -147,11 +158,13 @@ public class EditAlarms extends AppCompatActivity {
 
                     timerTextView.setText(Integer.toString(mins) + ":" + Integer.toString(secs) + "0");
 
-                }else {
+                }else if (secs < 10) {
+
+                    timerTextView.setText(Integer.toString(mins) + ":0" + Integer.toString(secs));
+
+                }else{
 
                     timerTextView.setText(Integer.toString(mins) + ":" + Integer.toString(secs));
-
-
                 }
 
 
