@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 public class EditAlarms extends AppCompatActivity {
 
-    private SeekBar timeSeekBar;
     private TextView passwordTextView;
     private Switch passwordSwitch;
     private EditText alarmNameEditText;
@@ -32,16 +31,12 @@ public class EditAlarms extends AppCompatActivity {
     private int mins;
     private int secs;
     private ArrayList<SSContact> alarmContacts;
-    private ArrayList<AlarmSettings> alarms;
-
-
+    private ArrayList<AlarmSettings> alarms = new ArrayList<>();
 
     static ArrayList<SSContact> myContacts = new ArrayList<>();
     static SSContactAdapter adapter;
-    static AlarmAdapter alarmAdapter;
 
     SharedPreferences sharedPreferences;
-
 
     public void backToMM(View view){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -59,7 +54,7 @@ public class EditAlarms extends AppCompatActivity {
 
             alarmName = alarmNameEditText.getText().toString();
 
-
+            timerPref = mins * 60 + secs;
             Alarm newAlarm = new Alarm(alarmName, Integer.toString(timerPref));
             ChooseAlarm.listViewAlarms.add(newAlarm);
             ChooseAlarm.alarmAdapter.notifyDataSetChanged();
@@ -90,7 +85,6 @@ public class EditAlarms extends AppCompatActivity {
 
 
             AlarmSettings alarm = new AlarmSettings(alarmContacts, passwordPref, alarmName ,timerPref);
-            alarms = new ArrayList<>();
             alarms.add(alarm);
 
         }
@@ -110,31 +104,57 @@ public class EditAlarms extends AppCompatActivity {
 
 
         SeekBar timerSeekBar = (SeekBar) findViewById(R.id.timerSeekBar);
+        final SeekBar secSeekBar = (SeekBar)findViewById(R.id.secSeekBar);
         final TextView timerTextView = (TextView) findViewById(R.id.timerTextView);
 
 
-        //Setting max time allowed to be 30mins
-        timerSeekBar.setMax(1800);
-        timerSeekBar.setProgress(30);
+        //Setting max time allowed to be 60mins
+        timerSeekBar.setMax(59);
+        timerSeekBar.setProgress(1);
+
+        secSeekBar.setMax(59);
+        secSeekBar.setProgress(30);
 
         //Allowing the seek bar to represent its number by a text view
         timerSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                mins = (int) progress / 60;
-                secs = progress - mins * 60;
+                mins = progress;
 
-                //For some reason not working1!!!!!!!!!!
-                String secondString = Integer.toString(secs);
+                timerTextView.setText(Integer.toString(mins) + ":" + Integer.toString(secSeekBar.getProgress()));
 
-                if(secondString == "0"){
+            }
 
-                    secondString = "00";
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        secSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                secs = progress;
+
+                if(secs == 0 ) {
+
+                    timerTextView.setText(Integer.toString(mins) + ":" + Integer.toString(secs) + "0");
+
+                }else {
+
+                    timerTextView.setText(Integer.toString(mins) + ":" + Integer.toString(secs));
+
+
                 }
 
-                timerTextView.setText(Integer.toString(mins) + ":" + secondString);
-                timerPref= progress;
+
 
             }
 
