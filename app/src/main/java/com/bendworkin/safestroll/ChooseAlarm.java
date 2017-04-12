@@ -1,9 +1,11 @@
 package com.bendworkin.safestroll;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -20,6 +22,20 @@ public class ChooseAlarm extends AppCompatActivity {
 
     static ArrayList<Alarm> listViewAlarms = new ArrayList<>();
     static AlarmAdapter alarmAdapter;
+
+    public void toAddNewAlarm(View view){
+
+        Intent intent = new Intent(getApplicationContext(), EditAlarms.class);
+        startActivity(intent);
+
+    }
+
+    public void toMainM(View view){
+
+        Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent2);
+
+    }
 
 
     @Override

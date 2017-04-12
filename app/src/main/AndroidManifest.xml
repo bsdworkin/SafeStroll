@@ -3,6 +3,7 @@
     package="com.bendworkin.safestroll">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +23,8 @@
         <activity android:name=".EditAlarms" />
         <activity android:name=".ChooseAlarm" />
         <activity android:name=".AlarmActivity"></activity>
+        
     </application>
+
 
 </manifest>

@@ -38,8 +38,14 @@ public class EditAlarms extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
-    public void backToMM(View view){
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+    public void backToEditAlarms(View view){
+
+        Intent intent = new Intent(getApplicationContext(), ChooseAlarm.class);
+        startActivity(intent);
+
+    }
+
+    public void addNewAlarm(View view){
 
         alarmNameEditText = (EditText)findViewById(R.id.alarmNameEditText);
         String nullCheck = "";
@@ -91,8 +97,7 @@ public class EditAlarms extends AppCompatActivity {
 
 
 
-
-        startActivity(intent);
+        Toast.makeText(this, "Alarm Added!", Toast.LENGTH_LONG).show();
     }
 
 

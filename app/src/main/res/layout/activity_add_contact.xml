@@ -54,7 +54,7 @@
             android:onClick="onClickAddContact" />
 
         <Button
-            android:text="Cancel"
+            android:text="Back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/backToEditContactsButton"

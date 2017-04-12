@@ -20,19 +20,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //Changing the activity from Main Menu to EditAlarms using an intent
+    //Changing the activity from Main Menu to Choose Alarms using an intent
     public void toEditAlarms(View view){
-        Intent intent2 = new Intent (getApplicationContext(), EditAlarms.class);
+        Intent intent2 = new Intent (getApplicationContext(), ChooseAlarm.class);
 
         startActivity(intent2);
     }
 
-    //Changing the activity from Main Menu to Start Stroll using an intent
-    public void toStartStroll(View view){
-        Intent intent3 = new Intent(getApplicationContext(), ChooseAlarm.class);
 
-        startActivity(intent3);
-    }
 
 
 
