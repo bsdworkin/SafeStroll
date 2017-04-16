@@ -8,15 +8,15 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.bendworkin.safestroll.ChooseAlarm">
+    tools:context="com.bendworkin.safestroll.EditAlarms">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:weightSum="1"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:weightSum="1">
+        android:layout_alignParentStart="true">
 
         <TextView
             android:text="Edit Alarms "
@@ -25,27 +25,82 @@
             android:id="@+id/textView2"
             android:gravity="center"
             android:textSize="48dip"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="normal|bold" />
+            android:textColor="@color/colorPrimary"
+            android:textStyle="normal|bold"
+            android:shadowDx="5"
+            android:shadowDy="8"
+            android:shadowRadius="1"
+            android:shadowColor="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Alarm Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView12"
+                android:layout_weight="1"
+                android:textStyle="normal|bold"
+                android:textSize="18sp"
+                android:textColor="@color/colorAccent"
+                android:gravity="left" />
+
+            <TextView
+                android:text="Time (Seconds)"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView10"
+                android:layout_weight="1"
+                android:textStyle="normal|bold"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"
+                android:gravity="center" />
+        </LinearLayout>
 
         <ListView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="287dp"
             android:id="@+id/alarmsListView"
-            android:layout_weight="0.99" />
+            android:layout_weight="0.99"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:clickable="true"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp"
+            android:headerDividersEnabled="false"
+            android:layout_margin="1dp"
+            android:outlineProvider="background" />
 
         <Button
             android:text="Add Alarm "
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/button2"
-            android:onClick="toAddNewAlarm" />
+            android:onClick="toAddNewAlarm"
+            android:background="@android:drawable/btn_default_small"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="normal|bold"
+            android:textSize="18sp"
+            android:shadowDx="2"
+            android:shadowDy="5"
+            android:shadowRadius="1"
+            android:shadowColor="@android:color/background_light" />
 
         <Button
             android:text="Back"
-            android:layout_width="match_parent"
+            android:layout_width="234dp"
             android:layout_height="wrap_content"
             android:id="@+id/button3"
-            android:onClick="toMainM" />
+            android:onClick="toMainM"
+            android:background="@android:drawable/btn_default_small"
+            android:textStyle="normal|bold"
+            android:textColor="@color/colorPrimary"
+            android:shadowDx="2"
+            android:shadowDy="5"
+            android:shadowRadius="1"
+            android:shadowColor="@android:color/background_light"
+            android:layout_gravity="center" />
     </LinearLayout>
 </RelativeLayout>

@@ -89,7 +89,7 @@ public class EditContacts extends AppCompatActivity {
             }
         } else {
 
-            myContacts.add(new SSContact("Name", "Phone Number"));
+            myContacts.add(new SSContact("Push me to delete", ""));
 
         }
 
@@ -106,7 +106,7 @@ public class EditContacts extends AppCompatActivity {
 
                 //Alert dialog to ensure user wants to delete contact
                 AlertDialog.Builder show = new AlertDialog.Builder(EditContacts.this);
-                        show.setIcon(android.R.drawable.ic_dialog_alert);
+                        show.setIcon(R.drawable.logo36);
                         show.setTitle("Delete Contact?");
                         show.setMessage("Are you sure you would like to delete this contact from you SSContact List?");
 

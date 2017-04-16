@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bendworkin.safestroll">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <application
         android:allowBackup="true"
@@ -20,11 +21,12 @@
         </activity>
         <activity android:name=".EditContacts" />
         <activity android:name=".AddContact" />
+        <activity android:name=".AddAlarm" />
         <activity android:name=".EditAlarms" />
-        <activity android:name=".ChooseAlarm" />
         <activity android:name=".AlarmActivity"></activity>
         
     </application>
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>
