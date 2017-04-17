@@ -21,13 +21,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.security.Permission;
+
 
 public class AlarmActivity extends AppCompatActivity {
 
     LocationManager locationManager;
     LocationListener locationListener;
+    SmsManager smsManager;
     private TextView alarmNameText;
     private TextView alarmTimeText;
     private AlarmSettings alarmSettings = new AlarmSettings(null, true, "Test Alarm", 10);//To test class
@@ -43,20 +44,37 @@ public class AlarmActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if(grantResults.length > 0){
 
-            //Checking to see if we asked for location permission
-            if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+            for(int i = 0; i < grantResults.length; i++){
 
-                //listening to the users location
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                if(requestCode == 1 && grantResults[i] == PackageManager.PERMISSION_GRANTED){
 
+                    //Checking to see if we asked for location permission
+                    if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
+
+                        //listening to the users location
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+
+                    }
+
+                }
+
+                if(requestCode == 2 && grantResults[i] == PackageManager.PERMISSION_GRANTED){
+
+                    //Checking to see if we asked for location permission
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+
+                        Log.i("Permission", "PermissionGranted");
+                    }
+
+                }
             }
-
         }
+
     }
 
-    public SmsManager smsManager;
+
 
     //When the user wants to start specified alarm
     public void startAlarm(final View view){
@@ -93,7 +111,7 @@ public class AlarmActivity extends AppCompatActivity {
 
                 //Resetting the visibility of start button
                 start.setVisibility(View.VISIBLE);
-                
+
                 //Setting the timer to users preference
                 if(startSecs == 0){
 
@@ -169,6 +187,18 @@ public class AlarmActivity extends AppCompatActivity {
 
             //We already have permission so we listen to the location
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        }
+
+        //Checking to see if we asked for sens sms permission
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED){
+
+            //If we dont have permission we need to ask for it
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 2);
+
+        }else {
+
+            //We already have permission so get smsManager
+            Log.i("Permission", "Alreadly Granted");
         }
 
         //Assigning Variables to respective ids of the widgets
