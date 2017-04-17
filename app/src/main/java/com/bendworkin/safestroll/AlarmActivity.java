@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -31,6 +32,10 @@ public class AlarmActivity extends AppCompatActivity {
     private TextView alarmTimeText;
     private AlarmSettings alarmSettings = new AlarmSettings(null, true, "Test Alarm", 10);//To test class
     public String phoneNumber = "8475023699";//To test class
+    private int startMins;
+    private int startSecs;
+    private Button start;
+    private Button stop;
 
     AlertDialog safeCheckWindow;
 
@@ -56,6 +61,7 @@ public class AlarmActivity extends AppCompatActivity {
     //When the user wants to start specified alarm
     public void startAlarm(final View view){
 
+        start.setVisibility(View.INVISIBLE);
 
         new CountDownTimer(alarmSettings.getTimerPref() * 1000 + 100, 1000) {
             @Override
@@ -83,6 +89,25 @@ public class AlarmActivity extends AppCompatActivity {
                     });
                     safeCheck.setNegativeButton("No", null);
 
+                //If the user picks no option and touches outside the dialog box
+
+                //Resetting the visibility of start button
+                start.setVisibility(View.VISIBLE);
+                
+                //Setting the timer to users preference
+                if(startSecs == 0){
+
+                    alarmTimeText.setText(startMins + ":00");
+
+                }else if(startSecs <10){
+
+                    alarmTimeText.setText(startMins + ":0" + startSecs);
+
+                }else{
+
+                    alarmTimeText.setText(startMins + ":" + startSecs);
+
+                }
 
                 safeCheckWindow = safeCheck.create();
                 safeCheckWindow.show();
@@ -90,6 +115,7 @@ public class AlarmActivity extends AppCompatActivity {
             }
 
         }.start();
+
 
     }
 
@@ -145,13 +171,16 @@ public class AlarmActivity extends AppCompatActivity {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         }
 
+        //Assigning Variables to respective ids of the widgets
         alarmNameText = (TextView) findViewById(R.id.alarmNameActivity);
         alarmTimeText = (TextView) findViewById(R.id.timerActivity);
+        start = (Button) findViewById(R.id.startButton);
+        stop = (Button) findViewById(R.id.stopButton);
 
         alarmNameText.setText(alarmSettings.getAlarmName());
         int startTime = alarmSettings.getTimerPref();
-        int startMins = (int) startTime / 60;
-        int startSecs = startTime - startMins * 60;
+        startMins = (int) startTime / 60;
+        startSecs = startTime - startMins * 60;
 
         //Setting the timer to users preference
         if(startSecs == 0){
@@ -170,7 +199,7 @@ public class AlarmActivity extends AppCompatActivity {
 
     }
 
-    //Method called to update the timer after it is started 
+    //Method called to update the timer after it is started
     public void updateTimer(int secsLeft, TextView timerView){
 
         int mins = (int) secsLeft / 60;
