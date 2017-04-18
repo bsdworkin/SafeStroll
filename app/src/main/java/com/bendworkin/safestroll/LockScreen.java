@@ -81,39 +81,29 @@ public class LockScreen extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences("com.bendworkin.safestroll", Context.MODE_PRIVATE);
         if (lock == null) {
             passwordTxt.setText("Set a new SafeStroll password");
-            lock = (PatternLockView) findViewById(R.id.pattern_lock_view);
-            lock.setDotCount(3);
-            lock.setDotNormalSize((int) ResourceUtils.getDimensionInPx(this, R.dimen.pattern_lock_dot_size));
-            lock.setDotSelectedSize((int) ResourceUtils.getDimensionInPx(this, R.dimen.pattern_lock_dot_selected_size));
-            lock.setPathWidth((int) ResourceUtils.getDimensionInPx(this, R.dimen.pattern_lock_path_width));
-            lock.setAspectRatioEnabled(true);
-            lock.setAspectRatio(PatternLockView.AspectRatio.ASPECT_RATIO_HEIGHT_BIAS);
-            lock.setViewMode(PatternLockView.PatternViewMode.CORRECT);
-            lock.setDotAnimationDuration(150);
-            lock.setPathEndAnimationDuration(100);
-            lock.setCorrectStateColor(ResourceUtils.getColor(this, R.color.pomegranate));
-            lock.setInStealthMode(false);
-            lock.setTactileFeedbackEnabled(true);
-            lock.setInputEnabled(true);
-            lock.addPatternLockListener(lockListener);
+            initializeLockSettings();
         } else {
             passwordTxt.setText("Enter your SafeStroll password");
-            lock = (PatternLockView) findViewById(R.id.pattern_lock_view);
-            lock.setDotCount(3);
-            lock.setDotNormalSize((int) ResourceUtils.getDimensionInPx(this, R.dimen.pattern_lock_dot_size));
-            lock.setDotSelectedSize((int) ResourceUtils.getDimensionInPx(this, R.dimen.pattern_lock_dot_selected_size));
-            lock.setPathWidth((int) ResourceUtils.getDimensionInPx(this, R.dimen.pattern_lock_path_width));
-            lock.setAspectRatioEnabled(true);
-            lock.setAspectRatio(PatternLockView.AspectRatio.ASPECT_RATIO_HEIGHT_BIAS);
-            lock.setViewMode(PatternLockView.PatternViewMode.CORRECT);
-            lock.setDotAnimationDuration(150);
-            lock.setPathEndAnimationDuration(100);
-            lock.setCorrectStateColor(ResourceUtils.getColor(this, R.color.pomegranate));
-            lock.setInStealthMode(false);
-            lock.setTactileFeedbackEnabled(true);
-            lock.setInputEnabled(true);
-            lock.addPatternLockListener(lockListener);
+            initializeLockSettings();
         }
 
+    }
+
+    private void initializeLockSettings() {
+        lock = (PatternLockView) findViewById(R.id.pattern_lock_view);
+        lock.setDotCount(3);
+        lock.setDotNormalSize((int) ResourceUtils.getDimensionInPx(this, R.dimen.pattern_lock_dot_size));
+        lock.setDotSelectedSize((int) ResourceUtils.getDimensionInPx(this, R.dimen.pattern_lock_dot_selected_size));
+        lock.setPathWidth((int) ResourceUtils.getDimensionInPx(this, R.dimen.pattern_lock_path_width));
+        lock.setAspectRatioEnabled(true);
+        lock.setAspectRatio(PatternLockView.AspectRatio.ASPECT_RATIO_HEIGHT_BIAS);
+        lock.setViewMode(PatternLockView.PatternViewMode.CORRECT);
+        lock.setDotAnimationDuration(150);
+        lock.setPathEndAnimationDuration(100);
+        lock.setCorrectStateColor(ResourceUtils.getColor(this, R.color.pomegranate));
+        lock.setInStealthMode(false);
+        lock.setTactileFeedbackEnabled(true);
+        lock.setInputEnabled(true);
+        lock.addPatternLockListener(lockListener);
     }
 }
