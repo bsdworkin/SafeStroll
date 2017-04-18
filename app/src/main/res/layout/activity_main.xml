@@ -89,7 +89,7 @@
         <Button
             android:text="Start A Stroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="67dp"
             android:id="@+id/startStroll"
             android:textSize="30sp"
             android:textColor="@android:color/background_light"

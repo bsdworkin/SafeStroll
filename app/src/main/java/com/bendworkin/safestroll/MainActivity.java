@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void toAlarmActivity(View view){
-        Intent intent3 = new Intent (getApplicationContext(), AlarmActivity.class);
+        Intent intent3 = new Intent (getApplicationContext(), PickAlarms.class);
 
         startActivity(intent3);
     }
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         // this verifies read and write permissions at start of app
         AlarmSettingsWriter.verifyStoragePermissions(this);
         Log.i("message", "verified permissions");
+
         //Two lines below will remove the permananent data stored in the app on the device
         //SharedPreferences sharedPreferences = this.getSharedPreferences("com.bendworkin.safestroll", Context.MODE_PRIVATE);
         //sharedPreferences.edit().clear().apply();

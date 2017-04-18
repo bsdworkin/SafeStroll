@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bendworkin.safestroll">
-  
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,16 +26,12 @@
         <activity android:name=".AddContact" />
         <activity android:name=".AddAlarm" />
         <activity android:name=".EditAlarms" />
-        <activity android:name=".AlarmActivity"></activity>
-        
+        <activity android:name=".AlarmActivity" />
+        <activity
+            android:name=".PickAlarm"
+            android:label="@string/title_activity_pick_alarm"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".PickAlarms"></activity>
     </application>
-
-    
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
 
 </manifest>
