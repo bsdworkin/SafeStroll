@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void toAlarmActivity(View view){
-        Intent intent3 = new Intent (getApplicationContext(), AlarmActivity.class);
+        Intent intent3 = new Intent (getApplicationContext(), LockScreen.class);
         startActivity(intent3);
     }
 

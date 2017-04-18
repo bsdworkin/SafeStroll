@@ -1,6 +1,7 @@
 package com.bendworkin.safestroll;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.content.SharedPreferencesCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import java.util.List;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Lock Screen Activity
@@ -55,13 +57,18 @@ public class LockScreen extends AppCompatActivity {
                 Log.d(getClass().getName(), "password set");
                 password = input;
                 sharedPreferences.edit().putInt("password", password).apply();
+                Intent setPWIntent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(setPWIntent);
+
             } else {
                 if (password == input) {
-                    // password correct
-                    // GOTO main activity
+                    //This is called in alarm activity
+                    Intent correctPWIntent = new Intent(getApplicationContext(), AlarmActivity.class);
+                    startActivity(correctPWIntent);
                     Log.d(getClass().getName(), "Correct Password!");
                 } else {
-                    // TODO invalid pw txt
+
+
                 }
             }
         }

@@ -12,9 +12,22 @@
         android:layout_height="wrap_content"
         android:text="Enter a password"
         android:visibility="visible"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="56dp" />
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="53dp"
+        android:textStyle="normal|bold"
+        android:textSize="36sp"
+        android:shadowDx="5"
+        android:shadowDy="8"
+        android:shadowColor="@android:color/darker_gray"
+        android:textColor="@color/colorPrimary" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/logo96"
+        android:id="@+id/imageView3"
+        tools:layout_editor_absoluteY="75dp"
+        tools:layout_editor_absoluteX="144dp" />
 
     <com.andrognito.patternlockview.PatternLockView
         android:id="@+id/pattern_lock_view"
@@ -29,6 +42,8 @@
         app:dotAnimationDuration="150"
         app:dotCount="3"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintVertical_bias="0.79" />
 
 </android.support.constraint.ConstraintLayout>
