@@ -1,299 +1,147 @@
 package com.bendworkin.safestroll;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SeekBar;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class EditAlarms extends AppCompatActivity {
 
-    private TextView passwordTextView;
-    private Switch passwordSwitch;
-    private EditText alarmNameEditText;
-    private boolean passwordPref;
-    private int timerPref;
-    private String alarmName;
-    private int mins;
-    private int secs;
-    private ArrayList<SSContact> alarmContacts;
-    private ArrayList<AlarmSettings> alarms = new ArrayList<>();
-
-    static ArrayList<SSContact> myContacts = new ArrayList<>();
-    static SSContactAdapter adapter;
-
     SharedPreferences sharedPreferences;
 
-    public void backToEditAlarms(View view){
+    static ArrayList<Alarm> listViewAlarms = new ArrayList<>();
+    static AlarmAdapter alarmAdapter;
 
-        Intent intent = new Intent(getApplicationContext(), ChooseAlarm.class);
+    public void toAddNewAlarm(View view){
+
+        Intent intent = new Intent(getApplicationContext(), AddAlarm.class);
         startActivity(intent);
 
     }
 
-    public void addNewAlarm(View view){
+    public void toMainM(View view){
 
-        alarmNameEditText = (EditText)findViewById(R.id.alarmNameEditText);
-        String nullCheck = "";
-        nullCheck = alarmNameEditText.getText().toString();
+        Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent2);
 
-        if(nullCheck.matches("")){
-
-            //Notifies user to input data
-            Toast.makeText(this, "Please Enter An Alarm Name", Toast.LENGTH_LONG).show();
-            return;
-        }else {
-
-            alarmName = alarmNameEditText.getText().toString();
-
-            timerPref = mins * 60 + secs;
-            Alarm newAlarm = new Alarm(alarmName, Integer.toString(timerPref));
-            ChooseAlarm.listViewAlarms.add(newAlarm);
-            ChooseAlarm.alarmAdapter.notifyDataSetChanged();
-
-            sharedPreferences = this.getSharedPreferences("com.bendworkin.safestroll", Context.MODE_PRIVATE);
-
-            try {
-
-                ArrayList<String> alarmNamesView = new ArrayList<>();
-                ArrayList<String> alarmTimesView = new ArrayList<>();
-
-                //Advanced for loop to restore and add the new contact to the lists
-                for(Alarm thisAlarm: ChooseAlarm.listViewAlarms){
-
-                    alarmNamesView.add(thisAlarm.thisName);
-                    alarmTimesView.add(thisAlarm.thisTime);
-
-                }
-
-                sharedPreferences.edit().putString("alarmNames", ObjectSerializer.serialize(alarmNamesView)).apply();
-                sharedPreferences.edit().putString("alarmTimes", ObjectSerializer.serialize(alarmTimesView)).apply();
-
-            } catch (IOException e) {
-
-                e.printStackTrace();
-
-            }
-
-
-            AlarmSettings alarm = new AlarmSettings(alarmContacts, passwordPref, alarmName ,timerPref);
-            alarms.add(alarm);
-
-        }
-
-
-
-        Toast.makeText(this, "Alarm Added!", Toast.LENGTH_LONG).show();
     }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_alarms);
+        setContentView(R.layout.activity_choose_alarm);
 
-
-
-        SeekBar timerSeekBar = (SeekBar) findViewById(R.id.timerSeekBar);
-        final SeekBar secSeekBar = (SeekBar)findViewById(R.id.secSeekBar);
-        final TextView timerTextView = (TextView) findViewById(R.id.timerTextView);
-
-
-        //Setting max time allowed to be 60mins
-        timerSeekBar.setMax(59);
-        timerSeekBar.setProgress(1);
-
-        secSeekBar.setMax(59);
-        secSeekBar.setProgress(30);
-
-        //Allowing the seek bar to represent its number by a text view
-        timerSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-                mins = progress;
-
-                if(secSeekBar.getProgress() == 0){
-
-                    timerTextView.setText(Integer.toString(mins) + ":00");
-
-                }else if (secSeekBar.getProgress() < 10 && secSeekBar.getProgress()!= 0) {
-
-                    timerTextView.setText(Integer.toString(mins) + ":0" + Integer.toString(secSeekBar.getProgress()));
-
-                }else{
-
-                    timerTextView.setText(Integer.toString(mins) + ":" + Integer.toString(secSeekBar.getProgress()));
-
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        secSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-                secs = progress;
-
-                if(secs == 0 ) {
-
-                    timerTextView.setText(Integer.toString(mins) + ":" + Integer.toString(secs) + "0");
-
-                }else if (secs < 10) {
-
-                    timerTextView.setText(Integer.toString(mins) + ":0" + Integer.toString(secs));
-
-                }else{
-
-                    timerTextView.setText(Integer.toString(mins) + ":" + Integer.toString(secs));
-                }
-
-
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        final TextView passwordTextView = (TextView)findViewById(R.id.passwordTextView);
-        final Switch passwordSwitch = (Switch)findViewById(R.id.passwordSwitch);
-
-        passwordSwitch.setChecked(true);
-        passwordPref = true;
-
-        //tells the user what the switch will do for the password preference
-        passwordSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if(passwordSwitch.isChecked()){
-                    passwordTextView.setText("Password is asked after each alarm fire");
-                    passwordPref = true;
-                }else{
-                    passwordTextView.setText("Password is asked ONLY when the alarm ends");
-                    passwordPref = false;
-                }
-
-            }
-        });
-
-        if(passwordSwitch.isChecked()){
-            passwordTextView.setText("Password is asked after each alarm fire");
-            passwordPref = true;
-        }
-        else {
-            passwordTextView.setText("Password is asked ONLY when the alarm ends");
-            passwordPref = false;
-        }
-
-        ListView contactListView  = (ListView)findViewById(R.id.contactListView);
+        ListView alarmsListView = (ListView) findViewById(R.id.alarmsListView);
 
         sharedPreferences = this.getSharedPreferences("com.bendworkin.safestroll", Context.MODE_PRIVATE);
 
-        ArrayList<String> names = new ArrayList<>();
-        ArrayList<String> phoneNumbers = new ArrayList<>();
+        ArrayList<String> listViewAlarmNames = new ArrayList<>();
+        ArrayList<String> listViewAlarmTimes = new ArrayList<>();
 
-        names.clear();
-        phoneNumbers.clear();
-        myContacts.clear();
+        listViewAlarmNames.clear();
+        listViewAlarmTimes.clear();
+        listViewAlarms.clear();
 
+        //Attempts to grab stored data from SharedPreferences
         try {
 
-            names = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("names", ObjectSerializer.serialize(new ArrayList<String>())));
+            //Have to use object serializer to unflatten the data from shared preferences
+            listViewAlarmNames = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("alarmNames", ObjectSerializer.serialize(new ArrayList<String>())));
 
-            phoneNumbers = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("phoneNumbers", ObjectSerializer.serialize(new ArrayList<String>())));
-
-
+            listViewAlarmTimes = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("alarmTimes", ObjectSerializer.serialize(new ArrayList<String>())));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if (names.size() > 0 && phoneNumbers.size() > 0 ) {
 
-            if (names.size() == phoneNumbers.size()) {
+        //Making sure there is data to add to array list
+        if (listViewAlarmNames.size() > 0 && listViewAlarmTimes.size() > 0 ) {
 
-                for (int i = 0; i < names.size(); i++) {
+            if (listViewAlarmNames.size() == listViewAlarmTimes.size()) {
 
-                    myContacts.add(new SSContact(names.get(i), phoneNumbers.get(i)));
+                for (int i = 0; i < listViewAlarmNames.size(); i++) {
+
+                    //creating a SSContact object for each contact stored
+                    listViewAlarms.add(new Alarm(listViewAlarmNames.get(i), listViewAlarmTimes.get(i)));
 
                 }
+
 
             }
         } else {
 
-            myContacts.add(new SSContact("Name", "Phone Number"));
+            listViewAlarms.add(new Alarm("Push me to delete", ""));
 
         }
 
-        adapter = new SSContactAdapter(this, myContacts);
-        contactListView.setAdapter(adapter);
+        alarmAdapter = new AlarmAdapter(this, listViewAlarms);
 
-        alarmContacts = new ArrayList<SSContact>();
+        alarmsListView.setAdapter(alarmAdapter);
 
-
-        //On click to be able to add contacts to alarmSettings
-        contactListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        alarmsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                //Alert dialog to ensure user wants to delete contact
+                AlertDialog.Builder show1 = new AlertDialog.Builder(EditAlarms.this);
+                        show1.setIcon(R.drawable.logo36);
+                        show1.setTitle("Delete Contact?");
+                        show1.setMessage("Are you sure you would like to delete this contact from you SSContact List?");
+
+                        //Allows user to delete contact
+                        show1.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                //To delete contact from listview in EditContact
+                                Alarm toRemove = alarmAdapter.getItem(position);
+                                alarmAdapter.remove(toRemove);
+                                alarmAdapter.notifyDataSetChanged();
+
+                                //To change the permanent data stored and restore it
+                                try {
+
+                                    ArrayList<String> listViewAlarmNames = new ArrayList<>();
+                                    ArrayList<String> listViewAlarmTimes = new ArrayList<>();
+
+                                    //Advanced for loop to restore and add the new contact to the lists
+                                    for (Alarm alarm : EditAlarms.listViewAlarms) {
+
+                                        listViewAlarmNames.add(alarm.thisName);
+                                        listViewAlarmTimes.add(alarm.thisTime);
+
+                                    }
 
 
-                if(alarmContacts.isEmpty()){
+                                    //Adds the lists to the shared prefs to be stored permanently
+                                    sharedPreferences.edit().putString("alarmNames", ObjectSerializer.serialize(listViewAlarmNames)).apply();
+                                    sharedPreferences.edit().putString("alarmTimes", ObjectSerializer.serialize(listViewAlarmTimes)).apply();
 
-                    alarmContacts.add(myContacts.get(position));
-                    view.setBackgroundColor(Color.CYAN);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
 
-                }
-                else if(alarmContacts.contains(myContacts.get(position))){
+                            }
 
-                    view.setBackgroundColor(Color.WHITE);
-                    alarmContacts.remove(myContacts.get(position));
 
-                }
-                else{
-
-                    alarmContacts.add(myContacts.get(position));
-                    view.setBackgroundColor(Color.CYAN);
-
-                }
+                        });
+                        show1.setNegativeButton("No", null);
+                        show1.show();
 
             }
         });
+        
 
     }
-
-
 }
-

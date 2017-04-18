@@ -9,7 +9,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.bendworkin.safestroll.AlarmActivity">
+    tools:context="com.bendworkin.safestroll.AlarmActivity"
+    android:background="@android:color/black">
 
     <LinearLayout
         android:orientation="vertical"
@@ -27,8 +28,13 @@
             android:gravity="center"
             android:singleLine="false"
             android:textStyle="normal|bold"
-            android:textColor="@android:color/holo_red_dark"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            android:textColor="@android:color/white"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textSize="55sp"
+            android:shadowDx="5"
+            android:shadowDy="8"
+            android:shadowRadius="2"
+            android:shadowColor="@color/colorPrimary" />
 
         <TextView
             android:text="0:00"
@@ -38,8 +44,8 @@
             android:textStyle="normal|bold"
             android:gravity="center"
             android:layout_gravity="center"
-            android:layout_margin="10dip"
-            android:textColor="@android:color/holo_blue_light"
+            android:layout_margin="2dip"
+            android:textColor="@color/colorPrimary"
             android:textSize="90sp" />
 
         <ImageView
@@ -49,7 +55,7 @@
             android:id="@+id/imageView4"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="10dip" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -61,14 +67,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/startButton"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:background="@android:drawable/btn_default_small"
+                android:textStyle="normal|bold"
+                android:textColor="@color/colorPrimary"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="1"
+                android:shadowColor="@android:color/background_light"
+                android:onClick="startAlarm" />
 
             <Button
                 android:text="Stop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/stopButton"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:background="@android:drawable/btn_default_small"
+                android:textStyle="normal|bold"
+                android:textColor="@color/colorPrimary"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="1"
+                android:shadowColor="@android:color/background_light"
+                android:onClick="toStopAlarm" />
         </LinearLayout>
 
         <Button
@@ -76,7 +98,17 @@
             android:layout_width="278dp"
             android:layout_height="wrap_content"
             android:id="@+id/sosButton"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:background="@android:color/background_light"
+            android:contextClickable="true"
+            android:textStyle="normal|bold"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimary"
+            android:shadowDx="2"
+            android:shadowDy="5"
+            android:shadowRadius="1"
+            android:shadowColor="@android:color/darker_gray"
+            android:onClick="sos" />
     </LinearLayout>
 
 </RelativeLayout>
