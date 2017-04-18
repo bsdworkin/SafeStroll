@@ -32,11 +32,12 @@ public class AlarmActivity extends AppCompatActivity {
     private TextView alarmNameText;
     private TextView alarmTimeText;
     private AlarmSettings alarmSettings = new AlarmSettings(null, true, "Test Alarm", 10);//To test class
-    public String phoneNumber = "8475023699";//To test class
+    public String phoneNumber = "15636503699";//To test class
     private int startMins;
     private int startSecs;
     private Button start;
     private Button stop;
+    Button sos;
 
     AlertDialog safeCheckWindow;
 
@@ -147,6 +148,8 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -226,6 +229,17 @@ public class AlarmActivity extends AppCompatActivity {
             alarmTimeText.setText(startMins + ":" + startSecs);
 
         }
+
+        sos = (Button) findViewById(R.id.sosButton);
+        sos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(phoneNumber, null, "Safe Stroll Test", null, null);
+
+            }
+        });
 
     }
 
