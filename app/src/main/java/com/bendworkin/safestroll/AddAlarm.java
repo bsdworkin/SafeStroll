@@ -16,8 +16,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import android.util.Log;
 
 public class AddAlarm extends AppCompatActivity {
 
@@ -30,10 +32,12 @@ public class AddAlarm extends AppCompatActivity {
     private int mins;
     private int secs;
     private ArrayList<SSContact> alarmContacts;
-    private ArrayList<AlarmSettings> alarms = new ArrayList<>();
+    public static ArrayList<AlarmSettings> alarms = new ArrayList<>();
 
     static ArrayList<SSContact> myContacts = new ArrayList<>();
     static SSContactAdapter adapter;
+
+    private AlarmSettingsWriter writer = new AlarmSettingsWriter();
 
     SharedPreferences sharedPreferences;
 
@@ -91,10 +95,22 @@ public class AddAlarm extends AppCompatActivity {
 
             AlarmSettings alarm = new AlarmSettings(alarmContacts, passwordPref, alarmName ,timerPref);
             alarms.add(alarm);
+            writer.toJson(alarms);
+            ArrayList<AlarmSettings> list = new ArrayList<>();
+            try {
+                list = writer.fromJson();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } finally {
+                for (AlarmSettings a : alarms)
+                    Log.i("message", a.getAlarmName());
+
+                for (AlarmSettings a : list)
+                    Log.i("message", a.getAlarmName());
+
+            }
 
         }
-
-
 
         Toast.makeText(this, "Alarm Added!", Toast.LENGTH_LONG).show();
     }
