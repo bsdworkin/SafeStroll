@@ -14,6 +14,7 @@ import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
+    public SharedPreferences sharedPreferences;
 
     //Changing the activity from Main Menu to Edit Contacts using an intent
     public void toEditContacts(View view){
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void toAlarmActivity(View view){
         Intent intent3 = new Intent (getApplicationContext(), AlarmActivity.class);
-
         startActivity(intent3);
     }
 
@@ -43,11 +43,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Two lines below will remove the permananent data stored in the app on the device
+        sharedPreferences = this.getSharedPreferences("com.bendworkin.safestroll", Context.MODE_PRIVATE);
+        //sharedPreferences.edit().clear().apply();
+
         // this verifies read and write permissions at start of app
         AlarmSettingsWriter.verifyStoragePermissions(this);
         Log.i("message", "verified permissions");
-        //Two lines below will remove the permananent data stored in the app on the device
-        //SharedPreferences sharedPreferences = this.getSharedPreferences("com.bendworkin.safestroll", Context.MODE_PRIVATE);
-        //sharedPreferences.edit().clear().apply();
+        if (sharedPreferences.getInt("password", -1) == -1) {
+            Intent passwordIntent = new Intent(getApplicationContext(), LockScreen.class);
+            startActivity(passwordIntent);
+        }
     }
 }
