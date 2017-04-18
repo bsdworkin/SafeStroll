@@ -62,8 +62,10 @@ public class LockScreen extends AppCompatActivity {
                 startActivity(setPW);
 
             } else {
+
                 if (password == input) {
                     //This is called in alarm activity
+
                     Intent correctPWIntent = new Intent(getApplicationContext(), AlarmActivity.class);
 
                     startActivity(correctPWIntent);
@@ -90,13 +92,16 @@ public class LockScreen extends AppCompatActivity {
         passwordTxt = (TextView) findViewById(R.id.textView5);
         passwordTxt.setVisibility(View.VISIBLE);
         sharedPreferences = this.getSharedPreferences("com.bendworkin.safestroll", Context.MODE_PRIVATE);
-        if (lock == null) {
+        password = sharedPreferences.getInt("password", -1);
+        if (lock == null && password == -1) {
             passwordTxt.setText("Set a new SafeStroll password");
             initializeLockSettings();
         } else {
             passwordTxt.setText("Enter your SafeStroll password");
             initializeLockSettings();
         }
+
+
 
     }
 
