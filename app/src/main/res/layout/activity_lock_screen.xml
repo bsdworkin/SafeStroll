@@ -21,14 +21,6 @@
         android:shadowColor="@android:color/darker_gray"
         android:textColor="@color/colorPrimary" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/logo96"
-        android:id="@+id/imageView3"
-        tools:layout_editor_absoluteY="75dp"
-        tools:layout_editor_absoluteX="144dp" />
-
     <com.andrognito.patternlockview.PatternLockView
         android:id="@+id/pattern_lock_view"
         android:layout_width="280dp"

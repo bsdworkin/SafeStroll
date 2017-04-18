@@ -146,6 +146,14 @@ public class AlarmActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void sos(View view){
+
+        Intent lockIntent = new Intent(getApplicationContext(), LockScreen.class);
+
+        startActivity(lockIntent);
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

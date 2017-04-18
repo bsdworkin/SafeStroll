@@ -57,20 +57,24 @@ public class LockScreen extends AppCompatActivity {
                 Log.d(getClass().getName(), "password set");
                 password = input;
                 sharedPreferences.edit().putInt("password", password).apply();
-                Intent setPWIntent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(setPWIntent);
+                Intent setPW = new Intent(getApplicationContext(), MainActivity.class);
+
+                startActivity(setPW);
 
             } else {
                 if (password == input) {
                     //This is called in alarm activity
                     Intent correctPWIntent = new Intent(getApplicationContext(), AlarmActivity.class);
+
                     startActivity(correctPWIntent);
                     Log.d(getClass().getName(), "Correct Password!");
+
                 } else {
-
-
+                    passwordTxt.setText("Wrong! Please Try Again!");
+                    lock.clearPattern();
                 }
             }
+
         }
 
         @Override
