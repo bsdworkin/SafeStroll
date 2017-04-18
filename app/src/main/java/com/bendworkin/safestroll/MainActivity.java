@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
 
-
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,12 +43,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
+        // this verifies read and write permissions at start of app
+        AlarmSettingsWriter.verifyStoragePermissions(this);
+        Log.i("message", "verified permissions");
         //Two lines below will remove the permananent data stored in the app on the device
         //SharedPreferences sharedPreferences = this.getSharedPreferences("com.bendworkin.safestroll", Context.MODE_PRIVATE);
         //sharedPreferences.edit().clear().apply();
-
-
     }
 }
