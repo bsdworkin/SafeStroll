@@ -51,19 +51,6 @@
             android:textAlignment="center" />
 
         <Button
-            android:text="START!"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button7"
-            android:background="@android:drawable/btn_default_small"
-            android:onClick="startThisAlarm"
-            android:shadowDx="2"
-            android:shadowDy="5"
-            android:shadowRadius="1"
-            android:shadowColor="@android:color/darker_gray"
-            android:textColor="@color/colorPrimary" />
-
-        <Button
             android:text="Cancel "
             android:layout_width="582dp"
             android:layout_height="wrap_content"

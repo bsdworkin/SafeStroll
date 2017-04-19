@@ -106,17 +106,6 @@
             android:shadowColor="@android:color/darker_gray"
             android:backgroundTint="@color/colorPrimary" />
 
-        <Button
-            android:text="Reset Password"
-            android:layout_width="173dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/button5"
-            android:background="@android:drawable/btn_default_small"
-            android:textSize="10sp"
-            android:textStyle="normal|bold"
-            android:layout_gravity="center"
-            android:onClick="toLockScreen" />
-
     </LinearLayout>
 
 </RelativeLayout>
