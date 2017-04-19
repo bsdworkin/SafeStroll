@@ -95,6 +95,11 @@ public class AddAlarm extends AppCompatActivity {
 
             AlarmSettings alarm = new AlarmSettings(alarmContacts, passwordPref, alarmName ,timerPref);
             alarms.add(alarm);
+            if(PickAlarm.pickAlarm != null){
+                PickAlarm.pickAlarm.notifyDataSetChanged();
+
+            }
+
             writer.toJson(alarms);
             ArrayList<AlarmSettings> list = new ArrayList<>();
             try {
@@ -288,7 +293,7 @@ public class AddAlarm extends AppCompatActivity {
                 if(alarmContacts.isEmpty()){
 
                     alarmContacts.add(myContacts.get(position));
-                    view.setBackgroundColor(Color.CYAN);
+                    view.setBackgroundColor(Color.GRAY);
 
                 }
                 else if(alarmContacts.contains(myContacts.get(position))){
@@ -300,7 +305,7 @@ public class AddAlarm extends AppCompatActivity {
                 else{
 
                     alarmContacts.add(myContacts.get(position));
-                    view.setBackgroundColor(Color.CYAN);
+                    view.setBackgroundColor(Color.GRAY);
 
                 }
 

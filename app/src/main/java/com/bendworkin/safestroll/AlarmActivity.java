@@ -5,10 +5,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -23,7 +25,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.security.Permission;
+import java.util.ArrayList;
 
 
 public class AlarmActivity extends AppCompatActivity {
@@ -31,16 +35,20 @@ public class AlarmActivity extends AppCompatActivity {
     LocationManager locationManager;
     LocationListener locationListener;
     SmsManager smsManager;
+    SharedPreferences sharedPreferences;
     private TextView alarmNameText;
     private TextView alarmTimeText;
-    private AlarmSettings alarmSettings = new AlarmSettings(null, true, "Test Alarm", 10);//To test class
-    public String phoneNumber = "3312209405";//To test class
+    private AlarmSettings alarmSettings; //new AlarmSettings(null, true, "Test Alarm", 10);//To test class
+    //public String phoneNumber = "3312209405";//To test class
     private int startMins;
     private int startSecs;
     private Button start;
     private Button stop;
     private double latitude;
     private double longitude;
+    private ArrayList<String> emailTemp;
+    private String[] emails;
+    private String checkAlarmName;
 
     AlertDialog safeCheckWindow;
 
@@ -174,6 +182,33 @@ public class AlarmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
+        sharedPreferences = this.getSharedPreferences("com.bendworkin.safestroll", Context.MODE_PRIVATE);
+
+
+
+
+
+
+        //Loop to find correct alarm in file
+
+
+        try {
+            emailTemp = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("emails", ObjectSerializer.serialize(new ArrayList<String>())));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for(int i=0; i < emailTemp.size(); i++){
+
+            if(!emailTemp.get(i).contains("@")){
+
+                emailTemp.remove(i);
+            }
+        }
+        emails = (String[])emailTemp.toArray();
+
+
+
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
@@ -291,7 +326,7 @@ public class AlarmActivity extends AppCompatActivity {
 
         Intent sos = new Intent(Intent.ACTION_SEND);
         sos.setType("message/rfc822");
-        sos.putExtra(Intent.EXTRA_EMAIL, new String[]{"manke.brandon@gmail.com"});
+        sos.putExtra(Intent.EXTRA_EMAIL, emails);
         sos.putExtra(Intent.EXTRA_SUBJECT, "SOS Alert from: ");
         sos.putExtra(Intent.EXTRA_TEXT, "I haven't responded to my SafeStroll alarm. " +
                 "\n Here is my location: https://www.google.com/maps?q=loc:" + latitude + "," + longitude + "&z=14" );

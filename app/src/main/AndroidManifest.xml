@@ -8,6 +8,8 @@
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -30,5 +32,7 @@
         <activity android:name=".LockScreen" />
         <activity android:name=".PickAlarm"></activity>
     </application>
+
+
 
 </manifest>

@@ -30,13 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void toAlarmActivity(View view){
-        Intent intent3 = new Intent (getApplicationContext(), AlarmActivity.class);
+        Intent intent3 = new Intent (getApplicationContext(), PickAlarm.class);
         startActivity(intent3);
     }
 
     public void toLockScreen(View view){
 
-        Intent intent4 = new Intent(getApplicationContext(), LockScreen.class);
+        Intent intent4 = new Intent(getApplicationContext(), AlarmActivity.class);
 
         startActivity(intent4);
 

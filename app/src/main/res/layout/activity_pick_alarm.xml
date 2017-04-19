@@ -45,7 +45,23 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="372dp"
-            android:layout_weight="0.77" />
+            android:layout_weight="0.85"
+            android:id="@+id/pickAlarmView"
+            android:layout_gravity="center"
+            android:textAlignment="center" />
+
+        <Button
+            android:text="START!"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button7"
+            android:background="@android:drawable/btn_default_small"
+            android:onClick="startThisAlarm"
+            android:shadowDx="2"
+            android:shadowDy="5"
+            android:shadowRadius="1"
+            android:shadowColor="@android:color/darker_gray"
+            android:textColor="@color/colorPrimary" />
 
         <Button
             android:text="Cancel "
