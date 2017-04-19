@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.Permission;
 import java.util.ArrayList;
@@ -49,6 +50,9 @@ public class AlarmActivity extends AppCompatActivity {
     private ArrayList<String> emailTemp;
     private String[] emails;
     private String checkAlarmName;
+
+    private AlarmSettingsWriter writer = new AlarmSettingsWriter();
+    private ArrayList<AlarmSettings> jsonAlarmSettingsList;
 
     AlertDialog safeCheckWindow;
 
@@ -184,12 +188,23 @@ public class AlarmActivity extends AppCompatActivity {
 
         sharedPreferences = this.getSharedPreferences("com.bendworkin.safestroll", Context.MODE_PRIVATE);
 
-
-
-
-
-
         //Loop to find correct alarm in file
+        checkAlarmName = sharedPreferences.getString("thisAlarmName", "No Name");
+
+        if (!checkAlarmName.equals("No name")) {
+            try {
+                jsonAlarmSettingsList = writer.fromJson();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            if (jsonAlarmSettingsList != null) {
+                for (AlarmSettings settings : jsonAlarmSettingsList) {
+                    if (checkAlarmName.equals(settings.getAlarmName())) {
+                        alarmSettings = settings;
+                    }
+                }
+            }
+        }
 
 
         try {
@@ -205,9 +220,7 @@ public class AlarmActivity extends AppCompatActivity {
                 emailTemp.remove(i);
             }
         }
-        emails = (String[])emailTemp.toArray();
-
-
+        emails = emailTemp.toArray(new String[0]);
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
@@ -326,7 +339,16 @@ public class AlarmActivity extends AppCompatActivity {
 
         Intent sos = new Intent(Intent.ACTION_SEND);
         sos.setType("message/rfc822");
-        sos.putExtra(Intent.EXTRA_EMAIL, emails);
+
+        // pulls contact names from alarm settings
+        ArrayList<SSContact> contacts = alarmSettings.getContacts();
+        ArrayList<String> tempList = new ArrayList<>();
+        for (SSContact contact : contacts) {
+            tempList.add(contact.getName());
+        }
+        // assigns all emails/names to recipients
+        String[] temp = tempList.toArray(new String[0]);
+        sos.putExtra(Intent.EXTRA_EMAIL, temp);
         sos.putExtra(Intent.EXTRA_SUBJECT, "SOS Alert from: ");
         sos.putExtra(Intent.EXTRA_TEXT, "I haven't responded to my SafeStroll alarm. " +
                 "\n Here is my location: https://www.google.com/maps?q=loc:" + latitude + "," + longitude + "&z=14" );
