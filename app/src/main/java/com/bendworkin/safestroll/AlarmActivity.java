@@ -138,7 +138,7 @@ public class AlarmActivity extends AppCompatActivity {
 
                         safeCheckWindow.dismiss();
                         //Code to send email and and lat/long
-
+                        sendEmail();
 
                     }
                 }, 10000);
@@ -165,6 +165,7 @@ public class AlarmActivity extends AppCompatActivity {
     public void sos(View view){
 
         //Code to send email and lat/long
+        sendEmail();
 
     }
 
@@ -271,6 +272,20 @@ public class AlarmActivity extends AppCompatActivity {
 
         timerView.setText(Integer.toString(mins)+ ":" + secsString);
 
+    }
+
+    private void sendEmail() {
+        Intent sos = new Intent(Intent.ACTION_SEND);
+        sos.setType("message/rfc822");
+        sos.putExtra(Intent.EXTRA_EMAIL  , new String[]{"manke.brandon@gmail.com"});
+        sos.putExtra(Intent.EXTRA_SUBJECT, "SOS Alert from: ");
+        sos.putExtra(Intent.EXTRA_TEXT, "I haven't responded to my SafeStroll alarm. " +
+                "\n Here is my location: ");
+        try {
+            startActivity(Intent.createChooser(sos, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(AlarmActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
