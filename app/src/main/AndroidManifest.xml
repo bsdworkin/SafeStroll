@@ -27,7 +27,8 @@
         <activity android:name=".AddAlarm" />
         <activity android:name=".EditAlarms" />
         <activity android:name=".AlarmActivity" />
-        <activity android:name=".LockScreen"></activity>
+        <activity android:name=".LockScreen" />
+        <activity android:name=".PickAlarm"></activity>
     </application>
 
 </manifest>
