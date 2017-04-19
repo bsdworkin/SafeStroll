@@ -40,7 +40,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="306dp"
             app:srcCompat="@drawable/logo192"
             android:id="@+id/imageView"
             android:layout_margin="30dip" />
@@ -100,8 +100,8 @@
             android:layout_margin="10dip"
             android:elevation="11dp"
             android:textStyle="normal|bold"
-            android:shadowDx="5"
-            android:shadowDy="8"
+            android:shadowDx="2"
+            android:shadowDy="5"
             android:shadowRadius="1"
             android:shadowColor="@android:color/darker_gray"
             android:backgroundTint="@color/colorPrimary" />

@@ -32,7 +32,7 @@ public class AlarmActivity extends AppCompatActivity {
     private TextView alarmNameText;
     private TextView alarmTimeText;
     private AlarmSettings alarmSettings = new AlarmSettings(null, true, "Test Alarm", 10);//To test class
-    public String phoneNumber = "8475023699";//To test class
+    public String phoneNumber = "3312209405";//To test class
     private int startMins;
     private int startSecs;
     private Button start;
@@ -130,6 +130,7 @@ public class AlarmActivity extends AppCompatActivity {
                 safeCheckWindow = safeCheck.create();
                 safeCheckWindow.show();
 
+
             }
 
         }.start();
@@ -148,9 +149,9 @@ public class AlarmActivity extends AppCompatActivity {
 
     public void sos(View view){
 
-        Intent lockIntent = new Intent(getApplicationContext(), LockScreen.class);
+        //Intent lockIntent = new Intent(getApplicationContext(), LockScreen.class);
 
-        startActivity(lockIntent);
+        //startActivity(lockIntent);
 
     }
 

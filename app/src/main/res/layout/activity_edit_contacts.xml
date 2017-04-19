@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:weightSum="1">
 
         <TextView
             android:text="Edit Contacts"
@@ -60,8 +61,9 @@
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="287dp"
-            android:id="@+id/contactsList" />
+            android:layout_height="wrap_content"
+            android:id="@+id/contactsList"
+            android:layout_weight="0.97" />
 
         <Button
             android:text="Add New Contact"
