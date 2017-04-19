@@ -11,10 +11,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class EditAlarms extends AppCompatActivity {
+
+    private AlarmSettingsWriter writer = new AlarmSettingsWriter();
+    ArrayList<AlarmSettings> jsonList = new ArrayList<>();
 
     SharedPreferences sharedPreferences;
 
@@ -106,6 +110,20 @@ public class EditAlarms extends AppCompatActivity {
 
                                 //To delete contact from listview in EditContact
                                 Alarm toRemove = alarmAdapter.getItem(position);
+                                String removeAlarmName = toRemove.getThisName();
+                                try {
+                                    jsonList = writer.fromJson();
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+
+                                for (int i = 0; i < jsonList.size(); i++) {
+                                    if (jsonList.get(i).getAlarmName().equals(removeAlarmName)) {
+                                        jsonList.remove(i);
+                                    }
+                                }
+
+                                writer.toJson(jsonList);
                                 alarmAdapter.remove(toRemove);
                                 alarmAdapter.notifyDataSetChanged();
 

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 
 public class PickAlarm extends AppCompatActivity {
 
-    public static ArrayList<AlarmSettings> alarms = new ArrayList<>();
+    public static ArrayList<AlarmSettings> pickAlarmList = new ArrayList<>();
+    private AlarmSettingsWriter writer = new AlarmSettingsWriter();
 
     public void toCancelAlarm(View view){
 
@@ -25,5 +26,11 @@ public class PickAlarm extends AppCompatActivity {
         setContentView(R.layout.activity_pick_alarm);
 
         //Grab things stored in Gson and populate an array list with info
+        try {
+            pickAlarmList = writer.fromJson();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
