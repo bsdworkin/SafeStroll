@@ -11,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.security.Permission;
 
@@ -130,10 +132,23 @@ public class AlarmActivity extends AppCompatActivity {
                 safeCheckWindow = safeCheck.create();
                 safeCheckWindow.show();
 
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        safeCheckWindow.dismiss();
+                        //Code to send email and and lat/long
+
+
+                    }
+                }, 10000);
+
+
 
             }
 
         }.start();
+
 
 
     }
@@ -149,9 +164,7 @@ public class AlarmActivity extends AppCompatActivity {
 
     public void sos(View view){
 
-        //Intent lockIntent = new Intent(getApplicationContext(), LockScreen.class);
-
-        //startActivity(lockIntent);
+        //Code to send email and lat/long
 
     }
 
