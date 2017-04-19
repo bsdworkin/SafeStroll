@@ -4,10 +4,8 @@ package com.bendworkin.safestroll;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.view.View;
 
 import android.util.Log;
@@ -36,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent3);
     }
 
+    public void toLockScreen(View view){
+
+        Intent intent4 = new Intent(getApplicationContext(), LockScreen.class);
+
+        startActivity(intent4);
+
+    }
 
 
     @Override
