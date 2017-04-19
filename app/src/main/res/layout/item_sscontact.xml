@@ -11,15 +11,17 @@
         android:padding="10dip"
         android:gravity="left"
         android:layout_gravity="left|center"
-        android:textColor="@color/colorPrimaryDark" />
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/tvHome"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Phone Number"
         android:gravity="right"
         android:layout_gravity="right|center"
         android:padding="10dip"
-        android:textColor="@color/colorPrimaryDark" />
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_width="50dip"
+        android:layout_weight="1" />
 </LinearLayout>

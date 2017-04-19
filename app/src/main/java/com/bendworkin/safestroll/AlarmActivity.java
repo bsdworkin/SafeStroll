@@ -39,6 +39,8 @@ public class AlarmActivity extends AppCompatActivity {
     private int startSecs;
     private Button start;
     private Button stop;
+    private double latitude;
+    private double longitude;
 
     AlertDialog safeCheckWindow;
 
@@ -46,14 +48,14 @@ public class AlarmActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if(grantResults.length > 0){
+        if (grantResults.length > 0) {
 
-            for(int i = 0; i < grantResults.length; i++){
+            for (int i = 0; i < grantResults.length; i++) {
 
-                if(requestCode == 1 && grantResults[i] == PackageManager.PERMISSION_GRANTED){
+                if (requestCode == 1 && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
 
                     //Checking to see if we asked for location permission
-                    if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                         //listening to the users location
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
@@ -62,24 +64,23 @@ public class AlarmActivity extends AppCompatActivity {
 
                 }
 
-                if(requestCode == 2 && grantResults[i] == PackageManager.PERMISSION_GRANTED){
+                //if(requestCode == 2 && grantResults[i] == PackageManager.PERMISSION_GRANTED){
 
-                    //Checking to see if we asked for location permission
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+                //Checking to see if we asked for location permission
+                //    if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
 
-                        Log.i("Permission", "PermissionGranted");
-                    }
+                //        Log.i("Permission", "PermissionGranted");
+                //    }
 
-                }
+                //}
             }
         }
 
     }
 
 
-
     //When the user wants to start specified alarm
-    public void startAlarm(final View view){
+    public void startAlarm(final View view) {
 
         start.setVisibility(View.INVISIBLE);
 
@@ -87,7 +88,7 @@ public class AlarmActivity extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
 
-                updateTimer((int)millisUntilFinished / 1000, alarmTimeText);
+                updateTimer((int) millisUntilFinished / 1000, alarmTimeText);
 
             }
 
@@ -96,18 +97,18 @@ public class AlarmActivity extends AppCompatActivity {
 
                 alarmTimeText.setText("0:00");
                 AlertDialog.Builder safeCheck = new AlertDialog.Builder(AlarmActivity.this);
-                    safeCheck.setIcon(R.drawable.logo36);
-                    safeCheck.setTitle("SafeStroll Check");
-                    safeCheck.setMessage("Proceed with Safe Stroll?");
-                    safeCheck.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                safeCheck.setIcon(R.drawable.logo36);
+                safeCheck.setTitle("SafeStroll Check");
+                safeCheck.setMessage("Proceed with Safe Stroll?");
+                safeCheck.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-                            startAlarm(view);
+                        startAlarm(view);
 
-                        }
-                    });
-                    safeCheck.setNegativeButton("No", null);
+                    }
+                });
+                safeCheck.setNegativeButton("No", null);
 
                 //If the user picks no option and touches outside the dialog box
 
@@ -115,15 +116,15 @@ public class AlarmActivity extends AppCompatActivity {
                 start.setVisibility(View.VISIBLE);
 
                 //Setting the timer to users preference
-                if(startSecs == 0){
+                if (startSecs == 0) {
 
                     alarmTimeText.setText(startMins + ":00");
 
-                }else if(startSecs <10){
+                } else if (startSecs < 10) {
 
                     alarmTimeText.setText(startMins + ":0" + startSecs);
 
-                }else{
+                } else {
 
                     alarmTimeText.setText(startMins + ":" + startSecs);
 
@@ -144,17 +145,15 @@ public class AlarmActivity extends AppCompatActivity {
                 }, 10000);
 
 
-
             }
 
         }.start();
 
 
-
     }
 
 
-    public void toStopAlarm(View view){
+    public void toStopAlarm(View view) {
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
@@ -162,7 +161,7 @@ public class AlarmActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void sos(View view){
+    public void sos(View view) {
 
         //Code to send email and lat/long
         sendEmail();
@@ -201,28 +200,28 @@ public class AlarmActivity extends AppCompatActivity {
         };
 
         //Checking to see if we asked for location permission
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             //If we dont have permission we need to ask for it
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
-        }else {
+        } else {
 
             //We already have permission so we listen to the location
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         }
 
         //Checking to see if we asked for sens sms permission
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED){
+        //if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED){
 
-            //If we dont have permission we need to ask for it
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 2);
+        //If we dont have permission we need to ask for it
+        //   ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 2);
 
-        }else {
+        //}else {
 
-            //We already have permission so get smsManager
-            Log.i("Permission", "Alreadly Granted");
-        }
+        //We already have permission so get smsManager
+        //   Log.i("Permission", "Alreadly Granted");
+        //}
 
         //Assigning Variables to respective ids of the widgets
         alarmNameText = (TextView) findViewById(R.id.alarmNameActivity);
@@ -236,15 +235,15 @@ public class AlarmActivity extends AppCompatActivity {
         startSecs = startTime - startMins * 60;
 
         //Setting the timer to users preference
-        if(startSecs == 0){
+        if (startSecs == 0) {
 
             alarmTimeText.setText(startMins + ":00");
 
-        }else if(startSecs <10){
+        } else if (startSecs < 10) {
 
             alarmTimeText.setText(startMins + ":0" + startSecs);
 
-        }else{
+        } else {
 
             alarmTimeText.setText(startMins + ":" + startSecs);
 
@@ -253,39 +252,59 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     //Method called to update the timer after it is started
-    public void updateTimer(int secsLeft, TextView timerView){
+    public void updateTimer(int secsLeft, TextView timerView) {
 
         int mins = (int) secsLeft / 60;
         int secs = secsLeft - mins * 60;
 
         String secsString = Integer.toString(secs);
 
-        if(secsString == "0"){
+        if (secsString == "0") {
 
             secsString = "00";
 
-        }else if(secs <10){
+        } else if (secs < 10) {
 
             secsString = "0" + secsString;
 
         }
 
-        timerView.setText(Integer.toString(mins)+ ":" + secsString);
+        timerView.setText(Integer.toString(mins) + ":" + secsString);
 
     }
 
     private void sendEmail() {
+
+        //Checking to see if we asked for location permission
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            //If we dont have permission we need to ask for it
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        } else {
+            //We already have permission so we listen to the location
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+        }
+
         Intent sos = new Intent(Intent.ACTION_SEND);
         sos.setType("message/rfc822");
-        sos.putExtra(Intent.EXTRA_EMAIL  , new String[]{"manke.brandon@gmail.com"});
+        sos.putExtra(Intent.EXTRA_EMAIL, new String[]{"manke.brandon@gmail.com"});
         sos.putExtra(Intent.EXTRA_SUBJECT, "SOS Alert from: ");
         sos.putExtra(Intent.EXTRA_TEXT, "I haven't responded to my SafeStroll alarm. " +
-                "\n Here is my location: ");
+                "\n Here is my location: https://www.google.com/maps?q=loc:" + latitude + "," + longitude + "&z=14" );
+
         try {
             startActivity(Intent.createChooser(sos, "Send mail..."));
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(AlarmActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
+
+        //smsmanager = SMSManager.getDefault();
+        //smsmanager.sendTextMessage(phoneNumber, null, "SafeStroll Test", null, null);
+
     }
 
 
