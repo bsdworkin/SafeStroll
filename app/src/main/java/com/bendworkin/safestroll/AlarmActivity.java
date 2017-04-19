@@ -50,6 +50,7 @@ public class AlarmActivity extends AppCompatActivity {
     private ArrayList<String> emailTemp;
     private String[] emails;
     private String checkAlarmName;
+    public static boolean pwPref;
 
     private AlarmSettingsWriter writer = new AlarmSettingsWriter();
     private ArrayList<AlarmSettings> jsonAlarmSettingsList;
@@ -112,6 +113,7 @@ public class AlarmActivity extends AppCompatActivity {
                 safeCheck.setIcon(R.drawable.logo36);
                 safeCheck.setTitle("SafeStroll Check");
                 safeCheck.setMessage("Proceed with Safe Stroll?");
+                safeCheck.setCancelable(false);
                 safeCheck.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -120,12 +122,25 @@ public class AlarmActivity extends AppCompatActivity {
 
                     }
                 });
-                safeCheck.setNegativeButton("No", null);
+                safeCheck.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        if(alarmSettings.getPasswordPref() == true){
+
+                            Intent pw = new Intent(getApplicationContext(), LockScreen.class);
+                            startActivity(pw);
+                        }
+
+                    }
+                });
 
                 //If the user picks no option and touches outside the dialog box
 
                 //Resetting the visibility of start button
                 start.setVisibility(View.VISIBLE);
+
+
 
                 //Setting the timer to users preference
                 if (startSecs == 0) {
@@ -149,12 +164,18 @@ public class AlarmActivity extends AppCompatActivity {
                     @Override
                     public void run() {
 
-                        safeCheckWindow.dismiss();
+                        if(safeCheckWindow.isShowing()){
+                            sendEmail();
+                            safeCheckWindow.dismiss();
+                        }
+
+
                         //Code to send email and and lat/long
-                        sendEmail();
+
+                       
 
                     }
-                }, 10000);
+                }, 15000);
 
 
             }
@@ -167,10 +188,13 @@ public class AlarmActivity extends AppCompatActivity {
 
     public void toStopAlarm(View view) {
 
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        pwPref = false;
+        Intent password = new Intent(getApplicationContext(), LockScreen.class);
 
+            //sharedPreferences.edit().remove("thisAlarmName").apply();
 
-        startActivity(intent);
+        startActivity(password);
+
     }
 
     public void sos(View view) {
@@ -206,7 +230,7 @@ public class AlarmActivity extends AppCompatActivity {
             }
         }
 
-
+        pwPref = alarmSettings.getPasswordPref();
         try {
             emailTemp = (ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("emails", ObjectSerializer.serialize(new ArrayList<String>())));
         } catch (IOException e) {

@@ -47,6 +47,7 @@ public class PickAlarm extends AppCompatActivity {
 
         sharedPreferences = this.getSharedPreferences("com.bendworkin.safestroll", Context.MODE_PRIVATE);
 
+        sharedPreferences.edit().remove("thisAlarmName").apply();
 
         //Grab things stored in Gson and populate an array list with info
         try {

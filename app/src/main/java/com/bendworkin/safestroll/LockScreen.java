@@ -65,10 +65,17 @@ public class LockScreen extends AppCompatActivity {
 
                 if (password == input) {
                     //This is called in alarm activity
+                    if(AlarmActivity.pwPref == true){
+                        Intent correctPWIntent = new Intent(getApplicationContext(), AlarmActivity.class);
+                        startActivity(correctPWIntent);
 
-                    Intent correctPWIntent = new Intent(getApplicationContext(), AlarmActivity.class);
+                    }else {
+                        Intent correctPWInt = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(correctPWInt);
+                    }
 
-                    startActivity(correctPWIntent);
+
+
                     Log.d(getClass().getName(), "Correct Password!");
 
                 } else {
