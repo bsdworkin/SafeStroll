@@ -208,12 +208,37 @@ public ArrayList<AlarmSettings> fromJson() throws FileNotFoundException {
         return list;
 }
 ```
+You can see more examples for the library [here](https://github.com/google/gson/tree/master/examples/android-proguard-example).
 
 ### Pattern Lock View
 
 We decided to use a 3rd party library for our pattern lock view. Credit to [Aritra Roy](https://github.com/aritraroy/PatternLockView) for designing a very nice lock library. The lock itself treats the dots as numbers from 0-n (n being the number of dots you choose). So verifing the password is just comparing a set of numbers.
 
-##### Example:
+Every pattern lock view needs a listener in order for it to take inputs and do things based on user input.
+Listener is added like `lock.addPatternLockListener(lockListener);`
+##### Creating a pattern lock view example:
+```java
+private static PatternLockView lock;
+private PatternLockViewListener lockListener = new PatternLockViewListener() {
+        @Override
+        public void onStarted() {
+        }
+
+        @Override
+        public void onProgress(List<PatternLockView.Dot> progressPattern) {
+        }
+
+        @Override
+        public void onComplete(List<PatternLockView.Dot> pattern) {
+        }
+
+        @Override
+        public void onCleared() {
+        }
+    };
+```
+
+##### Password Verification Example:
 ```java
 if (password == input) {
   //This is called in alarm activity
@@ -227,12 +252,18 @@ if (password == input) {
 }
 ```
 
+You can see more examples for the library [here](https://github.com/aritraroy/PatternLockView/blob/master/app/src/main/java/com/andrognito/patternlockdemo/MainActivity.java).
+
 ### App Icon
 
 We designed the app icon, using with some inspiration from similar types of apps and services. It was a pretty simple design to throw together in Photoshop.
 ##### Final Design:
 
 ![icon](http://i.imgur.com/cqKV5Ur.png)
+
+##### End
+
+Thanks for reading!
 
 
 
