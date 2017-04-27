@@ -1,6 +1,6 @@
 # SafeStroll
 
-[icon2](http://i.imgur.com/FcsIgxI.png)
+![icon2](http://i.imgur.com/FcsIgxI.png)
 
 Android app for getting home safe.
 
@@ -232,7 +232,7 @@ if (password == input) {
 We designed the app icon, using with some inspiration from similar types of apps and services. It was a pretty simple design to throw together in Photoshop.
 ##### Final Design:
 
-[icon](http://i.imgur.com/cqKV5Ur.png)
+![icon](http://i.imgur.com/cqKV5Ur.png)
 
 
 
