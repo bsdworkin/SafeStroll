@@ -1,5 +1,7 @@
 # SafeStroll
 
+[icon2](http://i.imgur.com/FcsIgxI.png)
+
 Android app for getting home safe.
 
 ## Documentation
@@ -141,4 +143,97 @@ sharedPreferences = this.getSharedPreferences("com.bendworkin.safestroll", Conte
             e.printStackTrace();
         }
 ```
+
+### GSON Implementation
+
+We decided to use Google's [Gson](https://github.com/google/gson) library to serialize our alarm settings objects to json. Since they could not be stored in shared preferences, we decided to permanently store them as json files on the phone.
+
+The library was imported with `import com.google.gson.*;`, we used gradle to manage the 3rd party packages.
+
+##### Gson Basic Example:
+```Java
+Gson gson = new Gson();
+try (FileWriter writer = new FileWriter(json)) {
+    gson.toJson(list, writer);
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+### File Storage
+
+We stored the json file on the phone, so it remembers the settings even when you close the app.
+Here is how the file is written to in the `AlarmSettingsWriter` class.
+
+##### Writing to file:
+```Java
+public void toJson(ArrayList<AlarmSettings> list) {
+        File root = new File(Environment.getExternalStorageDirectory().toString());
+        File json = new File(root, "alarm-settings.json");
+        Log.i("message", Environment.getExternalStorageDirectory().toString());
+        if (!json.exists()) {
+            try { json.createNewFile(); }
+            catch (IOException e) { e.printStackTrace(); }
+        }
+
+        try (FileWriter writer = new FileWriter(json)) {
+            gson.toJson(list, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.i("message", root.listFiles().toString());
+}
+```
+###### Reading from file example:
+```Java
+public ArrayList<AlarmSettings> fromJson() throws FileNotFoundException {
+        File root = new File(Environment.getExternalStorageDirectory().toString());
+        File json = new File(root, "alarm-settings.json");
+        if (!json.exists()) {
+            throw new FileNotFoundException("File not found");
+        }
+        ArrayList<AlarmSettings> list = new ArrayList<>();
+        AlarmSettings[] aSettings = null;
+        try {
+            JsonReader reader = new JsonReader(new FileReader(json));
+            aSettings = gson.fromJson(reader, AlarmSettings[].class);
+            for (AlarmSettings a : aSettings) {
+                list.add(a);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return list;
+}
+```
+
+### Pattern Lock View
+
+We decided to use a 3rd party library for our pattern lock view. Credit to [Aritra Roy](https://github.com/aritraroy/PatternLockView) for designing a very nice lock library. The lock itself treats the dots as numbers from 0-n (n being the number of dots you choose). So verifing the password is just comparing a set of numbers.
+
+##### Example:
+```java
+if (password == input) {
+  //This is called in alarm activity
+  if(AlarmActivity.pwPref == true){
+    Intent correctPWIntent = new Intent(getApplicationContext(), AlarmActivity.class);
+    startActivity(correctPWIntent);
+
+  } else {
+    Intent correctPWInt = new Intent(getApplicationContext(), MainActivity.class);
+    startActivity(correctPWInt);
+}
+```
+
+### App Icon
+
+We designed the app icon, using with some inspiration from similar types of apps and services. It was a pretty simple design to throw together in Photoshop.
+##### Final Design:
+
+[icon](http://i.imgur.com/cqKV5Ur.png)
+
+
+
 
