@@ -3,10 +3,17 @@
     package="com.bendworkin.safestroll">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo144"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -19,8 +26,13 @@
         </activity>
         <activity android:name=".EditContacts" />
         <activity android:name=".AddContact" />
+        <activity android:name=".AddAlarm" />
         <activity android:name=".EditAlarms" />
-        <activity android:name=".ChooseAlarm"></activity>
+        <activity android:name=".AlarmActivity" />
+        <activity android:name=".LockScreen" />
+        <activity android:name=".PickAlarm"></activity>
     </application>
+
+
 
 </manifest>

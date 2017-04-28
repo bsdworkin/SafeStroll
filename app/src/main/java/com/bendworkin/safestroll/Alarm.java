@@ -9,15 +9,15 @@ import java.io.Serializable;
 public class Alarm implements Serializable {
 
     public String thisName;
-    public int thisTime;
+    public String thisTime;
 
-    public Alarm(String thisName, int thisTime){
+    public Alarm(String thisName, String thisTime){
 
         this.thisName = thisName;
         this.thisTime = thisTime;
     }
 
-    public int getThisTime() {
+    public String getThisTime() {
         return thisTime;
     }
 
@@ -29,7 +29,7 @@ public class Alarm implements Serializable {
         this.thisName = thisName;
     }
 
-    public void setThisTime(int thisTime) {
+    public void setThisTime(String thisTime) {
         this.thisTime = thisTime;
     }
 

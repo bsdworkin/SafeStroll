@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -10,51 +11,101 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.bendworkin.safestroll.MainActivity">
 
-    <TextView
-        android:text="@string/main_menu"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:elevation="24dp"
-        android:gravity="center"
-        android:textStyle="normal|bold"
-        android:textSize="@android:dimen/app_icon_size"
-        android:textColor="@android:color/holo_blue_bright"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:shadowColor="@android:color/background_dark" />
+        android:layout_alignParentStart="true">
 
-    <Button
-        android:text="Edit Safe Stroll Contacts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:id="@+id/button"
-        android:onClick="toEditContacts"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:text="@string/main_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:elevation="15dp"
+            android:gravity="center"
+            android:textColor="@android:color/background_light"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:shadowColor="@color/colorPrimaryDark"
+            android:singleLine="false"
+            android:shadowRadius="1.5"
+            android:textStyle="normal|bold"
+            android:selectAllOnFocus="false"
+            android:textSize="64sp"
+            android:shadowDy="8"
+            android:shadowDx="5"
+            android:background="?attr/colorButtonNormal" />
 
-    <Button
-        android:text="Create New Safe Stroll Alarm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:id="@+id/editAlarmsButton"
-        android:onClick="toEditAlarms"
-        android:layout_below="@+id/button"
-        android:layout_alignParentStart="true" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="306dp"
+            app:srcCompat="@drawable/logo192"
+            android:id="@+id/imageView"
+            android:layout_margin="30dip" />
 
-    <Button
-        android:text="Start A Stroll"
-        android:layout_width="match_parent"
-        android:layout_height="@android:dimen/notification_large_icon_height"
-        android:id="@+id/startStroll"
-        android:layout_marginTop="38dp"
-        android:textSize="30sp"
-        android:textColor="@android:color/holo_blue_bright"
-        android:background="@android:color/background_dark"
-        android:layout_below="@+id/editAlarmsButton"
-        android:layout_alignParentStart="true"
-        android:onClick="toStartStroll" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:text="Edit Safe Stroll Alarms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editAlarmsButton"
+                android:onClick="toEditAlarms"
+                android:layout_below="@+id/button"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"
+                android:textColorLink="?attr/colorPrimary"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="1"
+                android:shadowColor="@android:color/background_light"
+                android:background="@android:drawable/btn_default"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="normal|bold" />
+
+            <Button
+                android:text="Edit Safe Stroll Contacts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button"
+                android:onClick="toEditContacts"
+                android:layout_below="@+id/textView"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="normal|bold"
+                android:shadowDx="2"
+                android:shadowDy="5"
+                android:shadowRadius="1"
+                android:shadowColor="@android:color/background_light"
+                android:background="@android:drawable/btn_default" />
+        </LinearLayout>
+
+        <Button
+            android:text="Start A Stroll"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:id="@+id/startStroll"
+            android:textSize="30sp"
+            android:textColor="@android:color/background_light"
+            android:background="@android:drawable/btn_default"
+            android:onClick="toAlarmActivity"
+            android:layout_below="@+id/editAlarmsButton"
+            android:layout_alignParentStart="true"
+            android:layout_margin="10dip"
+            android:elevation="11dp"
+            android:textStyle="normal|bold"
+            android:shadowDx="2"
+            android:shadowDy="5"
+            android:shadowRadius="1"
+            android:shadowColor="@android:color/darker_gray"
+            android:backgroundTint="@color/colorPrimary" />
+
+    </LinearLayout>
 
 </RelativeLayout>

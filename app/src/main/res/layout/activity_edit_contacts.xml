@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:weightSum="1">
 
         <TextView
             android:text="Edit Contacts"
@@ -25,12 +26,44 @@
             android:gravity="center"
             android:textSize="@android:dimen/app_icon_size"
             android:textStyle="normal|bold"
-            android:textColor="@android:color/holo_blue_bright" />
+            android:textColor="@color/colorPrimary"
+            android:shadowDx="5"
+            android:shadowDy="8"
+            android:shadowRadius="1"
+            android:shadowColor="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView6"
+                android:layout_weight="1"
+                android:textStyle="normal|bold"
+                android:textSize="18sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:text="Phone Number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView5"
+                android:layout_weight="1"
+                android:gravity="right|center"
+                android:textStyle="normal|bold"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+        </LinearLayout>
 
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/contactsList" />
+            android:id="@+id/contactsList"
+            android:layout_weight="0.97" />
 
         <Button
             android:text="Add New Contact"
@@ -38,14 +71,30 @@
             android:layout_height="wrap_content"
             android:id="@+id/addContact"
             android:gravity="center_vertical|center"
-            android:onClick="addNewContact" />
+            android:onClick="addNewContact"
+            android:background="@android:drawable/btn_default_small"
+            android:textStyle="normal|bold"
+            android:shadowDx="2"
+            android:shadowDy="5"
+            android:shadowRadius="1"
+            android:shadowColor="@android:color/background_light"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
 
         <Button
             android:text="Main Menu"
-            android:layout_width="match_parent"
+            android:layout_width="203dp"
             android:layout_height="wrap_content"
             android:id="@+id/backToMainMenu"
-            android:onClick="contactsToMainMenu" />
+            android:onClick="contactsToMainMenu"
+            android:layout_gravity="center"
+            android:background="@android:drawable/btn_default_small"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="normal|bold"
+            android:shadowDx="2"
+            android:shadowDy="5"
+            android:shadowRadius="1"
+            android:shadowColor="@android:color/background_light" />
     </LinearLayout>
 
 </RelativeLayout>
